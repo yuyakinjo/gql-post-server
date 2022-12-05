@@ -13,7 +13,9 @@ import { PostModule } from './post/post.module';
   imports: [
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
-      autoSchemaFile: true,
+      autoSchemaFile: {
+        federation: 2,
+      },
       path: 'graphql/posts',
       plugins: [ApolloServerPluginInlineTraceDisabled()],
     }),
