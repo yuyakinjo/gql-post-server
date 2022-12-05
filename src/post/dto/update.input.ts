@@ -5,7 +5,4 @@ import { CreateInput } from './create.input';
 export class UpdateInput extends PartialType(CreateInput) {
   @Field(() => Int, { description: 'id' })
   id: number;
-
-  @Field(() => String, { description: 'name' })
-  name: string;
 }
