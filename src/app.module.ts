@@ -8,6 +8,10 @@ import { ApolloServerPluginInlineTraceDisabled } from 'apollo-server-core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostModule } from './post/post.module';
+import { PostResolver } from './post/post.resolver';
+import { PostService } from './post/post.service';
+import { User } from './user/entities/user.entity';
+import { UsersResolver } from './user/user.resolver';
 
 @Module({
   imports: [
@@ -18,10 +22,13 @@ import { PostModule } from './post/post.module';
       },
       path: 'graphql/posts',
       plugins: [ApolloServerPluginInlineTraceDisabled()],
+      buildSchemaOptions: {
+        orphanedTypes: [User],
+      },
     }),
     PostModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PostResolver, UsersResolver, PostService],
 })
 export class AppModule {}
