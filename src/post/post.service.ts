@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInput } from './dto/create.input';
-import { UpdateInput } from './dto/update.input';
+import { CreatePostInput } from './dto/create.input';
+import { UpdatePostInput } from './dto/update.input';
 
 const posts = [
   { id: 1, title: 'Lorem Ipsum', views: 254, userId: 1 },
@@ -11,7 +11,7 @@ const posts = [
 export class PostService {
   #posts = posts;
 
-  create({ ...props }: CreateInput) {
+  create({ ...props }: CreatePostInput) {
     const ids = this.#posts.map(({ id }) => id);
     const incremantalId = Math.max(...ids) + 1;
     const post = { id: incremantalId, ...props };
@@ -27,7 +27,11 @@ export class PostService {
     return this.#posts.find((post) => post.id === id);
   }
 
-  update(id: number, updateUserInput: UpdateInput) {
+  findFromUserId(id: number) {
+    return this.#posts.filter((post) => post.userId === id);
+  }
+
+  update(id: number, updateUserInput: UpdatePostInput) {
     const [target] = this.#posts
       .filter((post) => post.id === id)
       .map((post) => ({ ...post, ...updateUserInput }));
