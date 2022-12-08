@@ -32,16 +32,15 @@ export class PostService {
   }
 
   update(id: number, inputs: UpdatePostInput) {
-    const [target] = this.#posts
-      .filter((post) => post.id === id)
-      .map((post) => ({ ...post, ...inputs }));
-    this.#posts = this.#posts.filter((post) => post.id !== id).concat(target);
-    return target;
+    const target = this.findOne(id);
+    const updated = { ...target, ...inputs };
+    this.#posts = this.#posts.filter((post) => post.id !== id).concat(updated);
+    return updated;
   }
 
   remove(id: number) {
-    const target = this.#posts.find((post) => post.id === id);
+    const removed = this.findOne(id);
     this.#posts = this.#posts.filter((post) => post.id !== id);
-    return target;
+    return removed;
   }
 }
