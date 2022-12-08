@@ -11,10 +11,10 @@ const posts = [
 export class PostService {
   #posts = posts;
 
-  create({ ...props }: CreatePostInput) {
+  create(inputs: CreatePostInput) {
     const ids = this.#posts.map(({ id }) => id);
     const incremantalId = Math.max(...ids) + 1;
-    const post = { id: incremantalId, ...props };
+    const post = { id: incremantalId, ...inputs };
     this.#posts.push(post);
     return post;
   }
@@ -31,10 +31,10 @@ export class PostService {
     return this.#posts.filter((post) => post.userId === id);
   }
 
-  update(id: number, updateUserInput: UpdatePostInput) {
+  update(id: number, inputs: UpdatePostInput) {
     const [target] = this.#posts
       .filter((post) => post.id === id)
-      .map((post) => ({ ...post, ...updateUserInput }));
+      .map((post) => ({ ...post, ...inputs }));
     this.#posts = this.#posts.filter((post) => post.id !== id).concat(target);
     return target;
   }
