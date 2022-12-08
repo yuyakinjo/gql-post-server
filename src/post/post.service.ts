@@ -40,7 +40,7 @@ export class PostService {
   }
 
   remove(id: number) {
-    const target = this.#posts.filter((post) => post.id === id);
+    const target = this.#posts.find((post) => post.id === id);
     this.#posts = this.#posts.filter((post) => post.id !== id);
     return target;
   }
